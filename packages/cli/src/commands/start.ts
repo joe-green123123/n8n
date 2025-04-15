@@ -285,6 +285,16 @@ export class Start extends BaseCommand {
 
 		const { type: dbType } = this.globalConfig.database;
 		if (dbType === 'sqlite') {
+	try {
+		require('better-sqlite3');
+	} catch (error) {
+		console.error(
+			'better-sqlite3 package not found. Try to install it: pnpm add better-sqlite3',
+		);
+		process.exit(1);
+	}
+}
+		if (dbType === 'sqlite') {
 			const shouldRunVacuum = this.globalConfig.database.sqlite.executeVacuumOnStartup;
 			if (shouldRunVacuum) {
 				await Container.get(ExecutionRepository).query('VACUUM;');
