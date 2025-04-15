@@ -2,7 +2,7 @@ import { DataSource } from '@n8n/typeorm';
 import * as fs from 'fs';
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { BINARY_ENCODING, NodeOperationError } from 'n8n-workflow';
-import * as sqlite3 from 'sqlite3';
+import Database from 'better-sqlite3';
 import * as temp from 'temp';
 
 export async function getSqliteDataSource(
