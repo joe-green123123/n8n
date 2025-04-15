@@ -34,13 +34,12 @@ export async function getSqliteDataSource(
 	const tempDbPath = temp.path({ suffix: '.sqlite' });
 	fs.writeFileSync(tempDbPath, bufferString);
 
-	// Initialize a new SQLite database from the temp file
-	const tempDb = new sqlite3.Database(tempDbPath, (error: Error | null) => {
-		if (error) {
-			throw new NodeOperationError(this.getNode(), 'Could not connect to database');
-		}
-	});
-	tempDb.close();
+	try {
+	const db = new Database(tempDbPath, { readonly: true });
+	db.close();
+} catch (error) {
+	throw new NodeOperationError(this.getNode(), 'Could not connect to database');
+}
 
 	return new DataSource({
 		type: 'sqlite',
