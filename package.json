@@ -43,7 +43,8 @@
     "test:nodes": "turbo run test:nodes --concurrency=1",
     "watch": "turbo run watch --parallel",
     "webhook": "./packages/cli/bin/n8n webhook",
-    "worker": "./packages/cli/bin/n8n worker"
+    "worker": "./packages/cli/bin/n8n worker",
+    "export-db": "node -e \"const fs = require('fs'); const path = require('path'); const os = require('os'); const dbPath = process.env.DB_SQLITE_DATABASE || path.join(process.env.N8N_USER_FOLDER || '/.n8n', 'database.sqlite'); console.log('Trying to access DB at: ' + dbPath); if (fs.existsSync(dbPath)) { const tmpDir = os.tmpdir(); const backupPath = path.join(tmpDir, 'n8n-backup-' + Date.now() + '.sqlite'); fs.copyFileSync(dbPath, backupPath); console.log('Database backed up to: ' + backupPath); } else { console.error('Database not found at: ' + dbPath); }\""
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
